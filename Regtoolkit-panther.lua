@@ -304,7 +304,7 @@ Window:Checkbox({
 -- Speed Boost toggle
 getgenv().SpeedBoost = false
 getgenv().SpeedValue = 5
-local SpeedThread = nil
+getgenv().SpeedValue = 5 -- Default fallback value
 
 Window:InputInt({
 	Label = "Speed Value",
@@ -312,7 +312,7 @@ Window:InputInt({
 	Minimum = 1,
 	Maximum = 100,
 	Callback = function(val)
-		getgenv().SpeedValue = val.Value -- ✅ FIXED
+		getgenv().SpeedValue = val.Value -- ✅ this MUST be val.Value
 	end
 })
 
@@ -328,9 +328,12 @@ Window:Checkbox({
 				while getgenv().SpeedBoost do
 					local char = p.Character or p.CharacterAdded:Wait()
 					local hum = char:FindFirstChildOfClass("Humanoid")
+
 					if hum then
-						hum.WalkSpeed = getgenv().SpeedValue
+						local speed = tonumber(getgenv().SpeedValue) or 16 -- fallback in case it's invalid
+						hum.WalkSpeed = speed
 					end
+
 					wait(0.1)
 				end
 				SpeedThread = nil
@@ -338,6 +341,7 @@ Window:Checkbox({
 		end
 	end
 })
+
 
 
 --[[ Optional UI extras
