@@ -312,9 +312,10 @@ Window:InputInt({
 	Minimum = 1,
 	Maximum = 100,
 	Callback = function(val)
-		getgenv().SpeedValue = val
+		getgenv().SpeedValue = val.Value -- ✅ FIXED
 	end
 })
+
 
 Window:Checkbox({
 	Value = false,
