@@ -301,6 +301,43 @@ Window:Checkbox({
 	end
 })
 
+-- Speed Boost toggle
+getgenv().SpeedBoost = false
+getgenv().SpeedValue = 5
+local SpeedThread = nil
+
+Window:InputInt({
+	Label = "Speed Value",
+	Value = 5,
+	Minimum = 1,
+	Maximum = 100,
+	Callback = function(val)
+		getgenv().SpeedValue = val
+	end
+})
+
+Window:Checkbox({
+	Value = false,
+	Label = "Speed Boost",
+	Callback = function(self, val)
+		getgenv().SpeedBoost = val
+
+		if val and SpeedThread == nil then
+			SpeedThread = task.spawn(function()
+				while getgenv().SpeedBoost do
+					local char = p.Character or p.CharacterAdded:Wait()
+					local hum = char:FindFirstChildOfClass("Humanoid")
+					if hum then
+						hum.WalkSpeed = getgenv().SpeedValue
+					end
+					wait(0.1)
+				end
+				SpeedThread = nil
+			end)
+		end
+	end
+})
+
 
 --[[ Optional UI extras
 Window:InputText({Label = "string"})
