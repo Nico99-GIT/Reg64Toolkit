@@ -32,7 +32,7 @@ local ReGui = loadstring(game:HttpGet('https://raw.githubusercontent.com/depthso
 
 -- Create GUI window
 local Window = ReGui:Window({
-	Title = [[⭐ Reg64 Toolkit 1.1 [PUBLIC RELEASE] ⭐]],
+	Title = [[⭐ Reg64 Toolkit 1.2 ⭐]],
 	Size = UDim2.fromOffset(300, 200)
 })
 
@@ -48,8 +48,10 @@ ReGui.Accent = {
 	Red = Color3.fromRGB(255, 69, 69),
 }
 
-Window:Label({Text=[[⭐ Reg64 Toolkit 1.1 [PUBLIC RELEASE] ⭐
+Window:Label({Text=[[⭐ Reg64 Toolkit 1.2 ⭐
 This script is intended for the game: Regular 64]]})
+
+Window:Label({Text=[[https://discord.gg/6v7EnaaZVc]]})
 
 Window:Label({Text="-- Main --"})
 
@@ -139,7 +141,6 @@ Window:Checkbox({
 	Label = "Rainbow Shirt & Hat",
 	Callback = function(self, Value: boolean)
 		getgenv().ToggleOn = Value
-
 		if Value then
 			if RGBThread == nil then
 				RGBThread = task.spawn(function()
@@ -301,47 +302,49 @@ Window:Checkbox({
 	end
 })
 
--- Speed Boost toggle
-getgenv().SpeedBoost = false
-getgenv().SpeedValue = 5
-getgenv().SpeedValue = 5 -- Default fallback value
+getgenv().BLJAnywhere = false
+local BLJAnywhereThread = nil
 
-Window:InputInt({
-	Label = "Speed Value",
-	Value = 5,
-	Minimum = 1,
-	Maximum = 100,
-	Callback = function(val)
-		getgenv().SpeedValue = val.Value -- ✅ this MUST be val.Value
-	end
-})
-
+Window:Label({Text="-- Cheats --"})
 
 Window:Checkbox({
+	Label = "BLJ Anywhere",
 	Value = false,
-	Label = "Speed Boost",
-	Callback = function(self, val)
-		getgenv().SpeedBoost = val
+	Callback = function(_, val)
+		getgenv().BLJAnywhere = val
 
-		if val and SpeedThread == nil then
-			SpeedThread = task.spawn(function()
-				while getgenv().SpeedBoost do
+		if val and not BLJAnywhereThread then
+			BLJAnywhereThread = task.spawn(function()
+				while getgenv().BLJAnywhere do
 					local char = p.Character or p.CharacterAdded:Wait()
+					local hrp = char:FindFirstChild("HumanoidRootPart")
 					local hum = char:FindFirstChildOfClass("Humanoid")
 
-					if hum then
-						local speed = tonumber(getgenv().SpeedValue) or 16 -- fallback in case it's invalid
-						hum.WalkSpeed = speed
+					if hrp and hum then
+						local moveDir = hrp.Velocity.Unit
+						local lookDir = hrp.CFrame.LookVector
+
+						local isMovingBackwards = moveDir:Dot(lookDir) < -0.3
+						local isAirborne = hum.FloorMaterial == Enum.Material.Air
+
+						if isMovingBackwards and isAirborne then
+							hrp.Velocity = Vector3.new(hrp.Velocity.X, -100, hrp.Velocity.Z)
+						end
 					end
 
-					wait(0.1)
+					task.wait(0.01)
 				end
-				SpeedThread = nil
+				BLJAnywhereThread = nil
 			end)
 		end
 	end
 })
 
+
+
+Window:Console({
+    LineNumbers = true
+})
 
 
 --[[ Optional UI extras
