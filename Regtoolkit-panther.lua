@@ -61,6 +61,67 @@ Window:Button({
 })
 
 Window:Button({
+	Text = "Unlock All Characters",
+	Callback = function()
+-- Services
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Remote
+local Unlock = ReplicatedStorage.Unlock -- RemoteFunction 
+
+Unlock:InvokeServer(
+    {
+        Name = "Wisple",
+        Type = "Character"
+    }
+)
+
+Unlock:InvokeServer(
+    {
+        Name = "Chipper",
+        Type = "Character"
+    }
+)
+
+Unlock:InvokeServer(
+    {
+        Name = "Woompol",
+        Type = "Character"
+    }
+)
+
+Unlock:InvokeServer(
+    {
+        Name = "Nommer",
+        Type = "Character"
+    }
+)
+
+Unlock:InvokeServer(
+    {
+        Name = "Servobot",
+        Type = "Character"
+    }
+)
+
+Unlock:InvokeServer(
+    {
+        Name = "Purrcipi",
+        Type = "Character"
+    }
+)
+
+Unlock:InvokeServer(
+    {
+        Name = "King Iro",
+        Type = "Character"
+    }
+)
+
+	end,
+})
+
+Window:Button({
 	Text = "Load Infinite Yield",
 	Callback = function()
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
