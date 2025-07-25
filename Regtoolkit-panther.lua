@@ -32,7 +32,7 @@ local ReGui = loadstring(game:HttpGet('https://raw.githubusercontent.com/depthso
 
 -- Create GUI window
 local Window = ReGui:Window({
-	Title = [[⭐ Reg64 Toolkit ⭐]],
+	Title = [[⭐ Reg64 Toolkit ⭐ [FREE]]],
 	Size = UDim2.fromOffset(300, 200)
 })
 
