@@ -32,7 +32,7 @@ local ReGui = loadstring(game:HttpGet('https://raw.githubusercontent.com/depthso
 
 -- Create GUI window
 local Window = ReGui:Window({
-	Title = [[⭐ Reg64 Toolkit 1.2 ⭐]],
+	Title = [[⭐ Reg64 Toolkit ⭐]],
 	Size = UDim2.fromOffset(300, 200)
 })
 
@@ -48,10 +48,10 @@ ReGui.Accent = {
 	Red = Color3.fromRGB(255, 69, 69),
 }
 
-Window:Label({Text=[[⭐ Reg64 Toolkit 1.2 ⭐
+Window:Label({Text=[[⭐ Reg64 Toolkit ⭐
 This script is intended for the game: Regular 64]]})
 
-Window:Label({Text=[[https://discord.gg/6v7EnaaZVc]]})
+Window:Label({Text=[[The Free Version Of Reg64 Toolkit will no longer get updated]]})
 
 Window:Label({Text="-- Main --"})
 
